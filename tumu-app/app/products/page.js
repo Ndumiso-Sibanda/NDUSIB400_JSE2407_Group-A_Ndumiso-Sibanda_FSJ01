@@ -1,9 +1,9 @@
-"use client"; // Add this directive to mark the component as a Client Component
+"use client"; 
 
 import { useState, useEffect } from 'react';
 import ProductCard from '../components/ProductCard';
 import Pagination from '../components/Pagination';
-import Spinner from '../components/Spinner'; // Import Spinner component
+import Spinner from '../components/Spinner'; 
 
 const API_URL = 'https://next-ecommerce-api.vercel.app/products';
 
