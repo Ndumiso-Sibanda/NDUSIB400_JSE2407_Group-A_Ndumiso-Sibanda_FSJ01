@@ -9,7 +9,7 @@ const API_URL = 'https://next-ecommerce-api.vercel.app/products';
 
 export default function ProductDetail() {
   const { id } = useParams(); 
-  const router = useRouter(); // For handling navigation
+  const router = useRouter(); 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -66,7 +66,7 @@ export default function ProductDetail() {
               alt={product.title}
               fill
               style={{ objectFit: 'contain' }}
-              className="rounded-lg border-4 border-gray-300" // Added border class here
+              className="rounded-lg border-4 border-gray-300" 
             />
           )}
           {images.length > 1 && (
