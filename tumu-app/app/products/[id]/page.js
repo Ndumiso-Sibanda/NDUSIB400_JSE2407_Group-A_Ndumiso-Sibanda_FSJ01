@@ -1,19 +1,20 @@
 "use client";
 
-import { useParams, useRouter } from 'next/navigation'; 
-import { useState, useEffect } from 'react';
-import Image from 'next/image';
-import Spinner from '../../components/Spinner';
+import { useParams, useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import Spinner from "../../components/Spinner";
 
-const API_URL = 'https://next-ecommerce-api.vercel.app/products';
+const API_URL = "https://next-ecommerce-api.vercel.app/products";
 
 export default function ProductDetail() {
-  const { id } = useParams(); 
-  const router = useRouter(); 
+  const { id } = useParams();
+  const router = useRouter();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [reviews, setReviews] = useState([]); 
 
   useEffect(() => {
     if (!id) return;
@@ -21,9 +22,10 @@ export default function ProductDetail() {
     const fetchProduct = async () => {
       try {
         const res = await fetch(`${API_URL}/${id}`);
-        if (!res.ok) throw new Error('Failed to fetch product');
+        if (!res.ok) throw new Error("Failed to fetch product");
         const data = await res.json();
         setProduct(data);
+        setReviews(data.reviews || []); 
         setError(null);
       } catch (err) {
         setError(err.message);
@@ -65,8 +67,8 @@ export default function ProductDetail() {
               src={currentImage}
               alt={product.title}
               fill
-              style={{ objectFit: 'contain' }}
-              className="rounded-lg border-4 border-gray-300" 
+              style={{ objectFit: "contain" }}
+              className="rounded-lg border-4 border-gray-300"
             />
           )}
           {images.length > 1 && (
@@ -91,8 +93,28 @@ export default function ProductDetail() {
           <p className="text-gray-700 mb-6">{product.description}</p>
           <p className="text-lg font-semibold mb-6">Price: ${product.price}</p>
           <p className="text-sm text-gray-600 mb-2">Category: {product.category}</p>
-          <p className="text-sm text-gray-600">Tags: {product.tags.join(', ')}</p>
+          <p className="text-sm text-gray-600">Tags: {product.tags.join(", ")}</p>
         </div>
+      </div>
+
+      {/* Reviews Section */}
+      <div className="mt-8">
+        <h3 className="text-2xl font-semibold mb-4">Reviews</h3>
+        {reviews.length > 0 ? (
+          <div className="space-y-4">
+            {reviews.map((review, index) => (
+              <div key={index} className="border p-4 rounded-md shadow-sm">
+                <p className="text-gray-800 font-semibold">{review.user}</p>
+                <p className="text-sm text-gray-600">{review.comment}</p>
+                <p className="text-sm text-yellow-500">
+                  Rating: {review.rating} / 5
+                </p>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-gray-500">No reviews yet.</p>
+        )}
       </div>
     </div>
   );
