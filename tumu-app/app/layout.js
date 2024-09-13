@@ -8,7 +8,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="bg-gray-100 ">
-        <header className="bg-gray-500 shadow-p4">
+        <header className="bg-gray-200 shadow-p4">
           <div className="container mx-auto p-4 flex justify-between items-center">
             <h1 className="text-3xl font-bold text-gray-800">Tumu/Foundation</h1>
           </div>
